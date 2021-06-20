@@ -113,12 +113,13 @@
         <VerInfo_Locale>1033</VerInfo_Locale>
         <VerInfo_Keys>CompanyName=;FileDescription=$(MSBuildProjectName);FileVersion=1.0.0.0;InternalName=;LegalCopyright=;LegalTrademarks=;OriginalFilename=;ProductName=$(MSBuildProjectName);ProductVersion=1.0.0.0;Comments=;ProgramID=com.embarcadero.$(MSBuildProjectName)</VerInfo_Keys>
         <Icon_MainIcon>HtmlToPDF_Demo_Icon.ico</Icon_MainIcon>
+        <DCC_UnitSearchPath>..\src\mORMot_pdf;$(DCC_UnitSearchPath)</DCC_UnitSearchPath>
     </PropertyGroup>
     <ItemGroup>
         <DelphiCompile Include="$(MainSource)">
             <MainSource>MainSource</MainSource>
         </DelphiCompile>
-        <DCCReference Include="..\src\vmHtmlToPdf.pas"/>
+        <DCCReference Include="..\src\Common\vmHtmlToPdf.pas"/>
         <DCCReference Include="..\src\uMainForm.pas">
             <Form>MainForm</Form>
         </DCCReference>
