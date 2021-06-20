@@ -8,3 +8,12 @@ Grazie all'utilizzo dei pacchetti
 HTMLViewer https://github.com/BerndGabriel/HtmlViewer
 Mormot https://synopse.info/fossil/wiki/Synopse+OpenSource
 
+
+Nella cartella ThirdParty sono presenti due cartelle:
+
+La cartella HTMLViewer contiene il pacchetto completo da installare se non già presente nell'IDE di Delphi
+La cartella mORMot_pdf che contiene un estratto della libreria mORMot dei file necessari alla compilazione del progetto.
+per l'utilizzo è stato aggiornato il file del progetto demo che contiene ora la ricerca nella path corretta.
+
+Se avete già presente nelle path di ricerca le cartelle di mORMot non è necessario fare nulla.
+
