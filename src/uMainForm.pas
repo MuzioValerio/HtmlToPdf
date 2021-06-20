@@ -64,7 +64,6 @@ type
     procedure edtFileHtmlRightButtonClick(Sender: TObject);
   private
     { Private declarations }
-    FFoglioStile: string;
     FSaveTo: Integer;
     FSettings: TMemIniFile;
   public
@@ -79,8 +78,6 @@ implementation
 uses SynPdf;
 
 {$R *.dfm}
-
-{$R Vista.res}
 
 procedure TMainForm.btnSave2Click(Sender: TObject);
 var
