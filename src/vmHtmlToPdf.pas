@@ -30,7 +30,6 @@ type
   strict private
     // PDF Parameters
     FPrintOrientation: TPrinterOrientation;
-    FDefaultPDFPaperSize: TPDFPaperSize;
     FPDFMarginTop: Double;
     FPDFMarginLeft: Double;
     FPDFMarginRight: Double;
@@ -128,7 +127,6 @@ type
     procedure SetSrcViewer(const Value: THTMLViewer);
     procedure SetTextPageNumber(const Value: string);
   public
-
     property PDFMarginTop: Double write SetPDFMarginTop;
     property PDFMarginLeft: Double write SetPDFMarginLeft;
     property PDFMarginRight: Double write SetPDFMarginRight;
@@ -263,7 +261,7 @@ var
   lPages: TList;
   lPage: TMetafile;
   lScale: Single;
-  lMarginL, lMarginR, lPointsWidth, lPointsHeight, lMarginBottom, lMarginTop: Single;
+  lMarginL, lPointsWidth, lPointsHeight, lMarginBottom, lMarginTop: Single;
   lPageText: string;
   lTextOutX, lTextOutY: Single;
 begin
@@ -281,7 +279,6 @@ begin
   lPages := FSrcViewer.MakePagedMetaFiles(lWidth, lHeight);
 
   lMarginL := Centimeters2Points(FPDFMarginLeft);
-  lMarginR := - Centimeters2Points(FPDFMarginRight);
   lMarginBottom := Centimeters2Points(FPDFMarginBottom);
   lMarginTop := Centimeters2Points(FPDFMarginTop);
 
@@ -343,10 +340,8 @@ end;
 
 procedure TvmHtmlToPdfGDI.Execute;
 var
-  lPage: TPdfPage;
-
   lFormatWidth, lWidth, lHeight, I: Integer;
-  lMarginL, lMarginR, lPointsWidth,  lPointsHeight, lMarginBottom, lMarginTop: Single;
+  lMarginL, lMarginR, lPointsWidth,  lPointsHeight, lMarginTop: Single;
   lPages: TList;
   lMFPage: TMetafile;
   lScale: Single;
@@ -367,14 +362,13 @@ begin
 
     lMarginL := Centimeters2Points(FPDFMarginLeft);
     lMarginR := Centimeters2Points(FPDFMarginRight);
-    lMarginBottom := Centimeters2Points(FPDFMarginBottom);
     lMarginTop := Centimeters2Points(FPDFMarginTop);
 
     ScreenLogPixels := Screen.PixelsPerInch;
     for I := 0 to LPages.Count - 1 do
     begin
       lMFPage := TMetafile(lPages[I]);
-      lPage := AddPage;
+      Self.AddPage;
 
       VCLCanvas.Draw(Trunc(lMarginL), Trunc(lMarginTop), LMFPage);
 
@@ -391,18 +385,18 @@ begin
         case FPageNumberPositionPrint of
           ppTop:
           begin
-            VCLCanvas.TextOut(Trunc(lMarginR + (lPointsWidth - VCLCanvas.TextWidth(PDFString(lPageText)))/2),
-              Trunc(0 + VCLCanvas.Font.Size), PDFString(lPageText));
+            VCLCanvas.TextOut(Trunc(lMarginR + (lPointsWidth - VCLCanvas.TextWidth(lPageText))/2),
+              Trunc(0 + VCLCanvas.Font.Size), lPageText);
           end;
           ppBottom:
           begin
-            VCLCanvas.TextOut(Trunc(lMarginR + (lPointsWidth - VCLCanvas.TextWidth(PDFString(lPageText)))/2),
-              lHeight + (VCLCanvas.Font.Size * 2), PDFString(lPageText));
+            VCLCanvas.TextOut(Trunc(lMarginR + (lPointsWidth - VCLCanvas.TextWidth(lPageText))/2),
+              lHeight + (VCLCanvas.Font.Size * 2), lPageText);
           end;
         end;
       end;
+      FreeAndNil(LMFPage);
     end;
-    FreeAndNil(LMFPage);
   finally
     FreeAndNil(lPages);
   end;
